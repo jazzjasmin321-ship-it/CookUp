@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CookUp - Users</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #fff7f0;
+            color: #333;
+        }
+
+        header {
+            background: #ff7a00;
+            color: white;
+            padding: 18px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        nav {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 8px 12px;
+            border-radius: 6px;
+        }
+
+        nav a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .container {
+            width: 95%;
+            max-width: 1200px;
+            margin: 30px auto;
+        }
+
+        h2 {
+            color: #e65c00;
+            margin-bottom: 20px;
+        }
+
+        .search-container {
+            margin-bottom: 20px;
+        }
+
+        #searchInput {
+            width: 100%;
+            max-width: 450px;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        #searchInput:focus {
+            border-color: #ff7a00;
+        }
+
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 900px;
+        }
+
+        th {
+            background: #ff7a00;
+            color: white;
+            padding: 14px;
+            text-align: left;
+        }
+
+        td {
+            padding: 13px;
+            border-bottom: 1px solid #eee;
+        }
+
+        tr:hover {
+            background: #fffaf5;
+        }
+
+        td a {
+            color: #e65c00;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        td a:hover {
+            text-decoration: underline;
+        }
+
+        .status-active {
+            color: green;
+            font-weight: bold;
+        }
+
+        .status-blocked {
+            color: red;
+            font-weight: bold;
+        }
+
+        button {
+            border: none;
+            border-radius: 6px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+
+        .block-btn {
+            background: #dc2626;
+            color: white;
+        }
+
+        .unblock-btn {
+            background: #16a34a;
+            color: white;
+        }
+
+        .delete-btn {
+            background: #555;
+            color: white;
+        }
+
+        .profile-btn {
+            display: inline-block;
+            background: #2563eb;
+            color: white !important;
+            padding: 8px 12px;
+            border-radius: 6px;
+            text-decoration: none !important;
+            margin-right: 5px;
+        }
+
+        button:hover,
+        .profile-btn:hover {
+            opacity: 0.85;
+        }
+
+        @media (max-width: 700px) {
+
+            header {
+                padding: 15px;
+            }
+
+            header h1 {
+                margin-bottom: 10px;
+            }
+
+            nav {
+                width: 100%;
+            }
+
+            nav a {
+                padding: 6px 8px;
+                font-size: 13px;
+            }
+
+            .container {
+                width: 92%;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<header>
+
+    <h1>CookUp Admin</h1>
+
+    <nav>
+
+        <a href="/admin/dashboard">Dashboard</a>
+
+        <a href="/admin/users">Users</a>
+
+        <a href="/admin/recipes">Recipes</a>
+
+        <a href="/admin/most-viewed">Most Viewed</a>
+
+        <a href="/admin/logout">Logout</a>
+
+    </nav>
+
+</header>
+
+<div class="container">
+
+    <h2>Users</h2>
+
+    <!-- SEARCH -->
+
+    <div class="search-container">
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Search users by name or email..."
+            oninput="searchUsers()"
+        >
+
+    </div>
+
+    <!-- TABLE -->
+
+    <div class="table-container">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>ID</th>
+
+                    <th>Name</th>
+
+                    <th>Email</th>
+
+                    <th>Bio</th>
+
+                    <th>Status</th>
+
+                    <th>Actions</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="usersTable">
+
+                <tr>
+
+                    <td colspan="6">
+                        Loading users...
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+<script>
+
+let allUsers = [];
+
+
+/* LOAD USERS */
+
+async function loadUsers() {
+
+    try {
+
+        const response =
+            await fetch("/api/admin/users");
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Failed to load users"
+            );
+
+        }
+
+        allUsers =
+            await response.json();
+
+        displayUsers(allUsers);
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        document.getElementById(
+            "usersTable"
+        ).innerHTML = `
+
+            <tr>
+
+                <td colspan="6">
+
+                    Unable to load users.
+
+                </td>
+
+            </tr>
+
+        `;
+
+    }
+
+}
+
+
+/* DISPLAY USERS */
+
+function displayUsers(users) {
+
+    const table =
+        document.getElementById(
+            "usersTable"
+        );
+
+    table.innerHTML = "";
+
+    if (users.length === 0) {
+
+        table.innerHTML = `
+
+            <tr>
+
+                <td colspan="6">
+
+                    No users found.
+
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
+    users.forEach(function(user) {
+
+        const row =
+            document.createElement("tr");
+
+        const status =
+            user.blocked
+            ? `
+
+                <span class="status-blocked">
+
+                    Blocked
+
+                </span>
+
+              `
+            : `
+
+                <span class="status-active">
+
+                    Active
+
+                </span>
+
+              `;
+
+
+        const actionButton =
+            user.blocked
+            ? `
+
+                <button
+                    class="unblock-btn"
+                    onclick="unblockUser(${user.id})">
+
+                    Unblock
+
+                </button>
+
+              `
+            : `
+
+                <button
+                    class="block-btn"
+                    onclick="blockUser(${user.id})">
+
+                    Block
+
+                </button>
+
+              `;
+
+
+        row.innerHTML = `
+
+            <td>
+
+                <a
+                    href="/admin/user-profile?id=${user.id}">
+
+                    ${user.id}
+
+                </a>
+
+            </td>
+
+
+            <td>
+
+                <a
+                    href="/admin/user-profile?id=${user.id}">
+
+                    ${user.fullname}
+
+                </a>
+
+            </td>
+
+
+            <td>
+
+                ${user.email}
+
+            </td>
+
+
+            <td>
+
+                ${user.bio || ""}
+
+            </td>
+
+
+            <td>
+
+                ${status}
+
+            </td>
+
+
+            <td>
+
+                ${actionButton}
+
+
+                <a
+                    class="profile-btn"
+                    href="/admin/user-profile?id=${user.id}">
+
+                    View Profile
+
+                </a>
+
+
+                <button
+                    class="delete-btn"
+                    onclick="deleteUser(${user.id})">
+
+                    Delete
+
+                </button>
+
+            </td>
+
+        `;
+
+
+        table.appendChild(row);
+
+    });
+
+}
+
+
+/* SEARCH */
+
+function searchUsers() {
+
+    const input =
+        document.getElementById(
+            "searchInput"
+        );
+
+    const searchText =
+        input.value
+            .toLowerCase()
+            .trim();
+
+    const filteredUsers =
+        allUsers.filter(function(user) {
+
+            const name =
+                String(user.fullname || "")
+                    .toLowerCase();
+
+            const email =
+                String(user.email || "")
+                    .toLowerCase();
+
+            return (
+                name.includes(searchText)
+                ||
+                email.includes(searchText)
+            );
+
+        });
+
+    displayUsers(filteredUsers);
+
+}
+
+
+/* BLOCK */
+
+async function blockUser(id) {
+
+    try {
+
+        const response =
+            await fetch(
+                `/api/admin/users/${id}/block`,
+                {
+                    method: "PUT"
+                }
+            );
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Block failed"
+            );
+
+        }
+
+        await loadUsers();
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Unable to block user."
+        );
+
+    }
+
+}
+
+
+/* UNBLOCK */
+
+async function unblockUser(id) {
+
+    try {
+
+        const response =
+            await fetch(
+                `/api/admin/users/${id}/unblock`,
+                {
+                    method: "PUT"
+                }
+            );
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Unblock failed"
+            );
+
+        }
+
+        await loadUsers();
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Unable to unblock user."
+        );
+
+    }
+
+}
+
+
+/* DELETE */
+
+async function deleteUser(id) {
+
+    const confirmed =
+        confirm(
+            "Are you sure you want to delete this user?"
+        );
+
+    if (!confirmed) {
+
+        return;
+
+    }
+
+    try {
+
+        const response =
+            await fetch(
+                `/api/admin/users/${id}`,
+                {
+                    method: "DELETE"
+                }
+            );
+
+        if (response.ok) {
+
+            alert(
+                "User deleted successfully."
+            );
+
+            await loadUsers();
+
+        }
+
+        else {
+
+            const error =
+                await response.text();
+
+            alert(
+                error ||
+                "Unable to delete user."
+            );
+
+        }
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Unable to connect to server."
+        );
+
+    }
+
+}
+
+
+/* START */
+
+loadUsers();
+
+</script>
+
+</body>
+
+</html>

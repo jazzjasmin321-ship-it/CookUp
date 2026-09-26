@@ -1,0 +1,383 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CookUp - Admin Dashboard</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #fff7f0;
+            color: #333;
+        }
+
+        header {
+            background: #ff7a00;
+            color: white;
+            padding: 18px 30px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            flex-wrap: wrap;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        nav {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+
+            padding: 8px 12px;
+            border-radius: 6px;
+        }
+
+        nav a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .container {
+            width: 95%;
+            max-width: 1100px;
+            margin: 35px auto;
+        }
+
+        .welcome {
+            margin-bottom: 30px;
+        }
+
+        .welcome h2 {
+            color: #e65c00;
+            margin-bottom: 8px;
+        }
+
+        .welcome p {
+            color: #666;
+        }
+
+        .cards {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 25px;
+        }
+
+        .card {
+            background: white;
+
+            padding: 30px;
+
+            border-radius: 12px;
+
+            box-shadow:
+                0 3px 15px
+                rgba(0, 0, 0, 0.08);
+
+            text-align: center;
+        }
+
+        .card h3 {
+            color: #e65c00;
+            margin-top: 0;
+        }
+
+        .number {
+            font-size: 42px;
+            font-weight: bold;
+            color: #ff7a00;
+
+            margin: 15px 0;
+        }
+
+        .card a {
+            display: inline-block;
+
+            background: #ff7a00;
+            color: white;
+
+            padding: 10px 18px;
+
+            border-radius: 7px;
+
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .card a:hover {
+            background: #e65c00;
+        }
+
+        .quick-links {
+            margin-top: 35px;
+
+            background: white;
+
+            padding: 25px;
+
+            border-radius: 12px;
+
+            box-shadow:
+                0 3px 15px
+                rgba(0, 0, 0, 0.08);
+        }
+
+        .quick-links h3 {
+            color: #e65c00;
+        }
+
+        .links {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .links a {
+            background: #fff0e3;
+            color: #e65c00;
+
+            padding: 12px 18px;
+
+            border-radius: 8px;
+
+            text-decoration: none;
+
+            font-weight: bold;
+        }
+
+        .links a:hover {
+            background: #ffe0c2;
+        }
+
+        @media (max-width: 700px) {
+
+            header {
+                padding: 15px;
+            }
+
+            header h1 {
+                margin-bottom: 10px;
+            }
+
+            nav {
+                width: 100%;
+            }
+
+            nav a {
+                padding: 6px 8px;
+                font-size: 13px;
+            }
+
+            .container {
+                width: 92%;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <h1>
+        CookUp Admin
+    </h1>
+
+
+    <nav>
+
+        <a href="/admin/dashboard">
+            Dashboard
+        </a>
+
+        <a href="/admin/users">
+            Users
+        </a>
+
+        <a href="/admin/recipes">
+            Recipes
+        </a>
+
+        <a href="/admin/most-viewed">
+            Most Viewed
+        </a>
+
+        <a href="/admin/logout">
+			Logout</a>
+        </a>
+
+    </nav>
+
+</header>
+
+
+<div class="container">
+
+
+    <div class="welcome">
+
+        <h2>
+            Admin Dashboard
+        </h2>
+
+        <p>
+            Welcome to the CookUp administration panel.
+        </p>
+
+    </div>
+
+
+    <div class="cards">
+
+
+        <!-- USERS -->
+
+        <div class="card">
+
+            <h3>
+                Total Users
+            </h3>
+
+            <div
+                class="number"
+                id="totalUsers">
+
+                0
+
+            </div>
+
+            <a href="/admin/users">
+                Manage Users
+            </a>
+
+        </div>
+
+
+        <!-- RECIPES -->
+
+        <div class="card">
+
+            <h3>
+                Total Recipes
+            </h3>
+
+            <div
+                class="number"
+                id="totalRecipes">
+
+                0
+
+            </div>
+
+            <a href="/admin/recipes">
+                Manage Recipes
+            </a>
+
+        </div>
+
+
+    </div>
+
+
+   
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<script>
+
+
+async function loadDashboard() {
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/admin/dashboard"
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Failed to load dashboard"
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        document.getElementById(
+            "totalUsers"
+        ).textContent =
+            data.totalUsers;
+
+
+        document.getElementById(
+            "totalRecipes"
+        ).textContent =
+            data.totalRecipes;
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Dashboard error:",
+            error
+        );
+
+    }
+
+}
+
+
+loadDashboard();
+
+
+</script>
+
+
+</body>
+
+</html>

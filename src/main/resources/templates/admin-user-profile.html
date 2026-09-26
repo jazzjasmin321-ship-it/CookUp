@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>CookUp Admin - User Profile</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #fff7ed;
+}
+
+/* Header */
+
+.header {
+    background: #f97316;
+    color: white;
+    padding: 18px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.admin-label {
+    font-size: 16px;
+}
+
+/* Navigation */
+
+.navbar {
+    background: white;
+    padding: 15px 30px;
+    display: flex;
+    gap: 25px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.navbar a {
+    text-decoration: none;
+    color: #444;
+    font-weight: bold;
+}
+
+.navbar a:hover {
+    color: #f97316;
+}
+
+/* Main */
+
+.container {
+    padding: 35px;
+}
+
+.page-title {
+    color: #333;
+    margin-bottom: 25px;
+}
+
+/* Profile */
+
+.profile-card {
+    background: white;
+    max-width: 700px;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.profile-picture {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: #fff7ed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.profile-picture img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-picture span {
+    color: #f97316;
+    font-size: 45px;
+    font-weight: bold;
+}
+
+.profile-row {
+    margin-bottom: 18px;
+}
+
+.profile-label {
+    color: #777;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.profile-value {
+    color: #333;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+/* Status */
+
+.status-active {
+    color: #16a34a;
+}
+
+.status-blocked {
+    color: #dc2626;
+}
+
+/* Recipes */
+
+.recipes-section {
+    margin-top: 30px;
+}
+
+.recipes-section h2 {
+    color: #333;
+}
+
+.recipe-card {
+    background: white;
+    padding: 18px;
+    margin-bottom: 12px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.recipe-name {
+    color: #f97316;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.recipe-info {
+    color: #666;
+    margin-top: 5px;
+}
+
+/* Mobile */
+
+@media (max-width: 700px) {
+
+    .header {
+        padding: 15px 20px;
+    }
+
+    .navbar {
+        padding: 15px 20px;
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+
+    .container {
+        padding: 25px 20px;
+    }
+
+    .profile-card {
+        padding: 20px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- Header -->
+
+<div class="header">
+
+    <div class="logo">
+        CookUp
+    </div>
+
+    <div class="admin-label">
+        Admin Panel
+    </div>
+
+</div>
+
+
+<!-- Navigation -->
+
+<div class="navbar">
+
+    <a href="/admin/dashboard">
+        Dashboard
+    </a>
+
+    <a href="/admin/users">
+        Users
+    </a>
+
+    <a href="/admin/recipes">
+        Recipes
+    </a>
+
+    <a href="/admin/most-viewed">
+        Most Viewed
+    </a>
+
+    <a href="/admin/logout">
+        Logout
+    </a>
+
+</div>
+
+
+<!-- Main -->
+
+<div class="container">
+
+    <h1 class="page-title">
+        User Profile
+    </h1>
+
+
+    <div class="profile-card">
+
+        <div class="profile-picture" id="profilePicture">
+
+            <span>U</span>
+
+        </div>
+
+
+        <div class="profile-row">
+
+            <div class="profile-label">
+                Full Name
+            </div>
+
+            <div class="profile-value" id="fullname">
+                Loading...
+            </div>
+
+        </div>
+
+
+        <div class="profile-row">
+
+            <div class="profile-label">
+                Email
+            </div>
+
+            <div class="profile-value" id="email">
+                Loading...
+            </div>
+
+        </div>
+
+
+        <div class="profile-row">
+
+            <div class="profile-label">
+                Bio
+            </div>
+
+            <div class="profile-value" id="bio">
+                Loading...
+            </div>
+
+        </div>
+
+
+        <div class="profile-row">
+
+            <div class="profile-label">
+                Status
+            </div>
+
+            <div class="profile-value" id="status">
+                Loading...
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- User Recipes -->
+
+    <div class="recipes-section">
+
+        <h2>
+            Recipes Created by User
+        </h2>
+
+        <div id="userRecipes">
+            Loading recipes...
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/*
+ * Get user ID from URL.
+ *
+ * Example:
+ * /admin/user-profile?id=1
+ */
+
+const urlParams =
+    new URLSearchParams(window.location.search);
+
+const userId =
+    urlParams.get("id");
+
+
+if (!userId) {
+
+    alert("User ID is missing.");
+
+    window.location.href =
+        "/admin/users";
+}
+
+
+/* Load user profile */
+
+async function loadUserProfile() {
+
+    try {
+
+        const response =
+            await fetch(
+                `/api/admin/users/${userId}`
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Failed to load user"
+            );
+
+        }
+
+
+        const user =
+            await response.json();
+
+
+        document.getElementById(
+            "fullname"
+        ).textContent =
+            user.fullname;
+
+
+        document.getElementById(
+            "email"
+        ).textContent =
+            user.email;
+
+
+        document.getElementById(
+            "bio"
+        ).textContent =
+            user.bio || "No bio";
+
+
+        const status =
+            document.getElementById(
+                "status"
+            );
+
+
+        if (user.blocked) {
+
+            status.textContent =
+                "Blocked";
+
+            status.className =
+                "profile-value status-blocked";
+
+        } else {
+
+            status.textContent =
+                "Active";
+
+            status.className =
+                "profile-value status-active";
+
+        }
+
+
+        /*
+         * Display profile picture
+         * if a picture value exists.
+         */
+
+        if (user.profilePicture) {
+
+            document.getElementById(
+                "profilePicture"
+            ).innerHTML = `
+
+                <img
+                    src="${user.profilePicture}"
+                    alt="Profile Picture"
+                >
+
+            `;
+
+        }
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "User profile error:",
+            error
+        );
+
+    }
+
+}
+
+
+/* Load user's recipes */
+
+async function loadUserRecipes() {
+
+    try {
+
+        const response =
+            await fetch(
+                `/api/admin/users/${userId}/recipes`
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Failed to load recipes"
+            );
+
+        }
+
+
+        const recipes =
+            await response.json();
+
+
+        const container =
+            document.getElementById(
+                "userRecipes"
+            );
+
+
+        container.innerHTML = "";
+
+
+        if (recipes.length === 0) {
+
+            container.textContent =
+                "No recipes created by this user.";
+
+            return;
+
+        }
+
+
+        recipes.forEach(function(recipe) {
+
+            const card =
+                document.createElement("div");
+
+
+            card.className =
+                "recipe-card";
+
+
+            card.innerHTML = `
+
+                <div class="recipe-name">
+                    ${recipe.name}
+                </div>
+
+                <div class="recipe-info">
+                    Time: ${recipe.time}
+                </div>
+
+                <div class="recipe-info">
+                    Level: ${recipe.level}
+                </div>
+
+                <div class="recipe-info">
+                    Views: ${recipe.views}
+                </div>
+
+            `;
+
+
+            container.appendChild(card);
+
+        });
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "User recipes error:",
+            error
+        );
+
+
+        document.getElementById(
+            "userRecipes"
+        ).textContent =
+            "Unable to load user recipes.";
+
+    }
+
+}
+
+
+/* Load everything */
+
+loadUserProfile();
+
+loadUserRecipes();
+
+</script>
+
+</body>
+
+</html>

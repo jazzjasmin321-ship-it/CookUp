@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+```
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>CookUp - Recipe Details</title>
+
+<style>
+
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #fff7f0;
+        color: #333;
+        min-height: 100vh;
+    }
+
+    header {
+        background: #ff7a00;
+        color: white;
+        padding: 14px 30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    header h1 {
+        margin: 0;
+        font-size: 26px;
+    }
+
+    nav {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    nav a {
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+        padding: 7px 10px;
+        border-radius: 6px;
+        font-size: 14px;
+    }
+
+    nav a:hover {
+        background: rgba(255, 255, 255, 0.2);
+    }
+
+    .container {
+        width: 94%;
+        max-width: 1200px;
+        margin: 18px auto;
+    }
+
+    .back-link {
+        display: inline-block;
+        margin-bottom: 12px;
+        color: #e65c00;
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+    .recipe-card {
+        background: white;
+        border-radius: 12px;
+        padding: 22px;
+        box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    .recipe-title {
+        color: #e65c00;
+        margin: 0 0 15px 0;
+        font-size: 27px;
+    }
+
+    .recipe-content {
+        display: grid;
+        grid-template-columns: 38% 62%;
+        gap: 25px;
+    }
+
+    .left-column {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .recipe-image {
+        width: 100%;
+        height: 270px;
+        object-fit: cover;
+        border-radius: 10px;
+        display: block;
+    }
+
+    .info-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        margin-top: 15px;
+    }
+
+    .info-box {
+        background: #fff3e8;
+        padding: 12px;
+        border-radius: 8px;
+        text-align: center;
+        font-size: 14px;
+    }
+
+    .info-box strong {
+        display: block;
+        color: #e65c00;
+        margin-bottom: 5px;
+        font-size: 13px;
+    }
+
+    .right-column {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .section {
+        margin: 0;
+    }
+
+    .section h3 {
+        color: #e65c00;
+        margin: 0 0 6px 0;
+        font-size: 18px;
+    }
+
+    .section p {
+        line-height: 1.45;
+        margin: 0;
+        font-size: 14px;
+        white-space: pre-line;
+    }
+
+    .chef-box {
+        background: #fff3e8;
+        padding: 12px 15px;
+        border-radius: 8px;
+    }
+
+    .chef-box p {
+        margin: 5px 0;
+        font-size: 14px;
+    }
+
+    .error {
+        background: #ffe5e5;
+        color: #b00020;
+        padding: 15px;
+        border-radius: 8px;
+    }
+
+    @media (max-width: 900px) {
+
+        .recipe-content {
+            grid-template-columns: 1fr;
+        }
+
+        .recipe-image {
+            height: 260px;
+        }
+
+    }
+
+    @media (max-width: 700px) {
+
+        header {
+            padding: 12px 15px;
+        }
+
+        header h1 {
+            margin-bottom: 8px;
+        }
+
+        nav {
+            width: 100%;
+        }
+
+        nav a {
+            padding: 6px 7px;
+            font-size: 12px;
+        }
+
+        .container {
+            width: 92%;
+        }
+
+        .recipe-card {
+            padding: 16px;
+        }
+
+        .recipe-title {
+            font-size: 23px;
+        }
+
+        .info-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .recipe-image {
+            height: 220px;
+        }
+
+    }
+
+</style>
+```
+
+</head>
+
+<body>
+
+<header>
+
+```
+<h1>CookUp Admin</h1>
+
+<nav>
+
+    <a href="/admin/dashboard">
+        Dashboard
+    </a>
+
+    <a href="/admin/users">
+        Users
+    </a>
+
+    <a href="/admin/recipes">
+        Recipes
+    </a>
+
+    <a href="/admin/most-viewed">
+        Most Viewed
+    </a>
+
+    <a href="/admin/logout">
+        Logout
+    </a>
+
+</nav>
+```
+
+</header>
+
+<div class="container">
+
+```
+<a
+    class="back-link"
+    href="/admin/recipes">
+
+    ← Back to Recipes
+
+</a>
+
+
+<div
+    id="recipeContainer"
+    class="recipe-card">
+
+    Loading recipe...
+
+</div>
+```
+
+</div>
+
+<script>
+
+const urlParams =
+    new URLSearchParams(
+        window.location.search
+    );
+
+const recipeId =
+    urlParams.get("id");
+
+
+async function loadRecipe() {
+
+    if (!recipeId) {
+
+        document.getElementById(
+            "recipeContainer"
+        ).innerHTML = `
+
+            <div class="error">
+                Recipe ID is missing.
+            </div>
+
+        `;
+
+        return;
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                `/api/admin/recipes/${recipeId}`
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Recipe not found"
+            );
+
+        }
+
+
+        const recipe =
+            await response.json();
+
+
+        displayRecipe(recipe);
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+
+        document.getElementById(
+            "recipeContainer"
+        ).innerHTML = `
+
+            <div class="error">
+                Unable to load recipe details.
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+function displayRecipe(recipe) {
+
+    const chef =
+        recipe.chef;
+
+
+    const chefName =
+        chef
+            ? chef.fullname
+            : "Unknown";
+
+
+    const chefEmail =
+        chef
+            ? chef.email
+            : "Not available";
+
+
+    const picture =
+        recipe.picture
+            ? recipe.picture
+            : "https://via.placeholder.com/600x300?text=Recipe";
+
+
+    document.getElementById(
+        "recipeContainer"
+    ).innerHTML = `
+
+        <h2 class="recipe-title">
+            ${recipe.name}
+        </h2>
+
+
+        <div class="recipe-content">
+
+
+            <div class="left-column">
+
+                <img
+                    class="recipe-image"
+                    src="${picture}"
+                    alt="${recipe.name}"
+                >
+
+
+                <div class="info-grid">
+
+                    <div class="info-box">
+
+                        <strong>
+                            Cooking Time
+                        </strong>
+
+                        ${recipe.time || "Not specified"}
+
+                    </div>
+
+
+                    <div class="info-box">
+
+                        <strong>
+                            Difficulty
+                        </strong>
+
+                        ${recipe.level || "Not specified"}
+
+                    </div>
+
+
+                    <div class="info-box">
+
+                        <strong>
+                            Views
+                        </strong>
+
+                        ${recipe.views || 0}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="right-column">
+
+
+                <div class="section">
+
+                    <h3>
+                        Ingredients
+                    </h3>
+
+                    <p>
+                        ${recipe.ingredients || "No ingredients provided."}
+                    </p>
+
+                </div>
+
+
+                <div class="section">
+
+                    <h3>
+                        Instructions
+                    </h3>
+
+                    <p>
+                        ${recipe.instructions || "No instructions provided."}
+                    </p>
+
+                </div>
+
+
+                <div class="section">
+
+                    <h3>
+                        Chef
+                    </h3>
+
+
+                    <div class="chef-box">
+
+                        <p>
+                            <strong>Name:</strong>
+                            ${chefName}
+                        </p>
+
+                        <p>
+                            <strong>Email:</strong>
+                            ${chefEmail}
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+loadRecipe();
+
+</script>
+
+</body>
+
+</html>

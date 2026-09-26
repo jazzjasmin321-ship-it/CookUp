@@ -1,0 +1,481 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CookUp - Most Viewed Recipes</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #fff7f0;
+            color: #333;
+        }
+
+        header {
+            background: #ff7a00;
+            color: white;
+            padding: 18px 30px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            flex-wrap: wrap;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        nav {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+
+            padding: 8px 12px;
+            border-radius: 6px;
+        }
+
+        nav a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .container {
+            width: 95%;
+            max-width: 1200px;
+            margin: 30px auto;
+        }
+
+        h2 {
+            color: #e65c00;
+            margin-bottom: 20px;
+        }
+
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+
+            background: white;
+
+            border-radius: 10px;
+
+            box-shadow:
+                0 3px 12px
+                rgba(0, 0, 0, 0.08);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+
+            min-width: 850px;
+        }
+
+        th {
+            background: #ff7a00;
+            color: white;
+
+            padding: 14px;
+
+            text-align: left;
+        }
+
+        td {
+            padding: 13px;
+
+            border-bottom: 1px solid #eee;
+        }
+
+        tr:hover {
+            background: #fffaf5;
+        }
+
+        .recipe-link {
+            color: #e65c00;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .recipe-link:hover {
+            text-decoration: underline;
+        }
+
+        .chef-link {
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        .chef-link:hover {
+            text-decoration: underline;
+        }
+
+        .message {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .rank {
+            font-weight: bold;
+            color: #e65c00;
+        }
+
+        @media (max-width: 700px) {
+
+            header {
+                padding: 15px;
+            }
+
+            header h1 {
+                margin-bottom: 10px;
+            }
+
+            nav {
+                width: 100%;
+            }
+
+            nav a {
+                padding: 6px 8px;
+                font-size: 13px;
+            }
+
+            .container {
+                width: 92%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <h1>
+        CookUp Admin
+    </h1>
+
+
+    <nav>
+
+        <a href="/admin/dashboard">
+            Dashboard
+        </a>
+
+        <a href="/admin/users">
+            Users
+        </a>
+
+        <a href="/admin/recipes">
+            Recipes
+        </a>
+
+        <a href="/admin/most-viewed">
+            Most Viewed
+        </a>
+
+        <a href="/admin/logout">
+            Logout
+        </a>
+
+    </nav>
+
+</header>
+
+
+<div class="container">
+
+
+    <h2>
+        Most Viewed Recipes
+    </h2>
+
+
+    <div class="table-container">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Rank
+                    </th>
+
+                    <th>
+                        Recipe Name
+                    </th>
+
+                    <th>
+                        Chef
+                    </th>
+
+                    <th>
+                        Time
+                    </th>
+
+                    <th>
+                        Level
+                    </th>
+
+                    <th>
+                        Views
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody id="recipesTable">
+
+                <tr>
+
+                    <td
+                        colspan="6"
+                        class="message">
+
+                        Loading recipes...
+
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+</div>
+
+
+<script>
+
+
+async function loadMostViewedRecipes() {
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/admin/recipes/most-viewed"
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Failed to load recipes"
+            );
+
+        }
+
+
+        const recipes =
+            await response.json();
+
+
+        displayRecipes(recipes);
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+
+        document.getElementById(
+            "recipesTable"
+        ).innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="6"
+                    class="message">
+
+                    Unable to load recipes.
+
+                </td>
+
+            </tr>
+
+        `;
+
+    }
+
+}
+
+
+
+function displayRecipes(recipes) {
+
+    const table =
+        document.getElementById(
+            "recipesTable"
+        );
+
+
+    table.innerHTML = "";
+
+
+    if (recipes.length === 0) {
+
+        table.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="6"
+                    class="message">
+
+                    No recipes found.
+
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
+
+    recipes.forEach(
+        function(recipe, index) {
+
+            const row =
+                document.createElement("tr");
+
+
+            const chef =
+                recipe.chef;
+
+
+            const chefName =
+                chef
+                    ? chef.fullname
+                    : "Unknown";
+
+
+            const chefId =
+                chef
+                    ? chef.id
+                    : null;
+
+
+            const chefDisplay =
+                chefId
+
+                ? `
+                    <a
+                        class="chef-link"
+                        href="/admin/user-profile?id=${chefId}">
+
+                        ${chefName}
+
+                    </a>
+                  `
+
+                : chefName;
+
+
+            row.innerHTML = `
+
+                <td>
+
+                    <span class="rank">
+
+                        #${index + 1}
+
+                    </span>
+
+                </td>
+
+
+                <td>
+
+                    <a
+                        class="recipe-link"
+                        href="/admin/recipe-details?id=${recipe.id}">
+
+                        ${recipe.name}
+
+                    </a>
+
+                </td>
+
+
+                <td>
+
+                    ${chefDisplay}
+
+                </td>
+
+
+                <td>
+
+                    ${recipe.time || ""}
+
+                </td>
+
+
+                <td>
+
+                    ${recipe.level || ""}
+
+                </td>
+
+
+                <td>
+
+                    ${recipe.views || 0}
+
+                </td>
+
+            `;
+
+
+            table.appendChild(row);
+
+        }
+    );
+
+}
+
+
+loadMostViewedRecipes();
+
+
+</script>
+
+
+</body>
+
+</html>
