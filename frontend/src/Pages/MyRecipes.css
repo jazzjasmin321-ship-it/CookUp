@@ -1,0 +1,292 @@
+
+/* =========================
+   MY RECIPES PAGE
+========================= */
+
+.my-recipes-page {
+  min-height: calc(100vh - 70px);
+  background-color: #fafafa;
+  padding: 50px 55px 70px;
+  box-sizing: border-box;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.my-recipes-header {
+  max-width: 1200px;
+  margin: 0 auto 35px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.my-recipes-header h1 {
+  margin: 0 0 7px;
+
+  color: #222222;
+
+  font-size: 30px;
+  font-weight: 600;
+}
+
+.my-recipes-header p {
+  margin: 0;
+
+  color: #888888;
+
+  font-size: 14px;
+}
+
+
+/* =========================
+   CREATE BUTTON
+========================= */
+
+.create-new-btn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  padding: 11px 17px;
+
+  background-color: #f97316;
+
+  border: 1px solid #f97316;
+  border-radius: 7px;
+
+  color: #ffffff;
+
+  font-size: 14px;
+  font-weight: 500;
+
+  text-decoration: none;
+
+  transition: 0.2s ease;
+}
+
+.create-new-btn:hover {
+  background-color: #ea580c;
+  border-color: #ea580c;
+}
+
+.create-new-btn span {
+  font-size: 20px;
+  line-height: 1;
+}
+
+
+/* =========================
+   RECIPE GRID
+========================= */
+
+.my-recipes-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 25px;
+}
+
+
+/* =========================
+   RECIPE CARD
+========================= */
+
+.my-recipe-card {
+  overflow: hidden;
+
+  background-color: #ffffff;
+
+  border: 1px solid #eeeeee;
+  border-radius: 12px;
+
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.04);
+
+  transition: 0.2s ease;
+}
+
+.my-recipe-card:hover {
+  transform: translateY(-3px);
+
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.07);
+}
+
+
+/* =========================
+   RECIPE IMAGE
+========================= */
+
+.my-recipe-image {
+  width: 100%;
+  height: 210px;
+
+  overflow: hidden;
+}
+
+.my-recipe-image img {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+
+  transition: transform 0.3s ease;
+}
+
+.my-recipe-card:hover .my-recipe-image img {
+  transform: scale(1.04);
+}
+
+
+/* =========================
+   CONTENT
+========================= */
+
+.my-recipe-content {
+  padding: 20px;
+}
+
+.my-recipe-content h2 {
+  margin: 0 0 9px;
+
+  color: #222222;
+
+  font-size: 19px;
+  font-weight: 600;
+}
+
+
+/* =========================
+   META
+========================= */
+
+.recipe-meta {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  margin-bottom: 20px;
+
+  color: #888888;
+
+  font-size: 13px;
+}
+
+
+/* =========================
+   ACTIONS
+========================= */
+
+.my-recipe-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.edit-recipe-btn,
+.delete-recipe-btn {
+  flex: 1;
+
+  height: 40px;
+
+  border-radius: 6px;
+
+  font-size: 13px;
+  font-weight: 500;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+
+/* Edit */
+
+.edit-recipe-btn {
+  background-color: #ffffff;
+
+  border: 1px solid #dddddd;
+
+  color: #444444;
+}
+
+.edit-recipe-btn:hover {
+  border-color: #f97316;
+
+  color: #f97316;
+
+  background-color: #fff8f3;
+}
+
+
+/* Delete */
+
+.delete-recipe-btn {
+  background-color: #ffffff;
+
+  border: 1px solid #eeeeee;
+
+  color: #d33b2e;
+}
+
+.delete-recipe-btn:hover {
+  background-color: #fff5f4;
+
+  border-color: #d33b2e;
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 900px) {
+
+  .my-recipes-page {
+    padding: 40px 25px 60px;
+  }
+
+  .my-recipes-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
+
+  .my-recipes-page {
+    padding: 30px 15px 50px;
+  }
+
+  .my-recipes-header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .my-recipes-header h1 {
+    font-size: 26px;
+  }
+
+  .create-new-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .my-recipes-grid {
+    grid-template-columns: 1fr;
+  }
+
+}

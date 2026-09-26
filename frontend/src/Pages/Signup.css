@@ -1,0 +1,403 @@
+
+/* ==============================
+   SIGNUP PAGE
+============================== */
+
+.signup-page {
+  min-height: 100vh;
+  width: 100%;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding: 25px 20px;
+
+  background: linear-gradient(
+    135deg,
+    #fff7ed 0%,
+    #ffffff 50%,
+    #ffedd5 100%
+  );
+}
+
+
+/* ==============================
+   COOKUP HEADING
+============================== */
+
+.signup-brand {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.signup-brand h1 {
+  margin: 0;
+
+  font-size: 46px;
+  line-height: 1;
+  font-weight: 800;
+  letter-spacing: -1.5px;
+
+  color: #ea580c;
+}
+
+.signup-brand p {
+  margin: 5px 0 0;
+
+  font-size: 13px;
+  font-weight: 500;
+
+  color: #9a3412;
+}
+
+
+/* ==============================
+   SIGNUP FORM CARD
+============================== */
+
+.signup-container {
+  width: 100%;
+  max-width: 430px;
+
+  box-sizing: border-box;
+
+  padding: 28px 35px;
+
+  background: #ffffff;
+
+  border: 1px solid #fed7aa;
+  border-radius: 18px;
+
+  box-shadow: 0 12px 35px rgba(194, 65, 12, 0.12);
+}
+
+
+/* ==============================
+   FORM HEADER
+============================== */
+
+.signup-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.signup-header h2 {
+  margin: 0 0 6px;
+
+  font-size: 23px;
+  font-weight: 700;
+
+  color: #292524;
+}
+
+.signup-header p {
+  margin: 0;
+
+  font-size: 13px;
+  line-height: 1.4;
+
+  color: #78716c;
+}
+
+
+/* ==============================
+   FORM
+============================== */
+
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.form-group label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #44403c;
+}
+
+.form-group input {
+  width: 100%;
+  box-sizing: border-box;
+
+  padding: 10px 12px;
+
+  border: 1px solid #e7e5e4;
+  border-radius: 8px;
+
+  background: #fffaf5;
+
+  color: #292524;
+  font-size: 14px;
+
+  outline: none;
+
+  transition: 0.2s ease;
+}
+
+.form-group input::placeholder {
+  color: #a8a29e;
+}
+
+.form-group input:hover {
+  border-color: #fdba74;
+}
+
+.form-group input:focus {
+  border-color: #f97316;
+
+  background: #ffffff;
+
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
+}
+
+
+/* ==============================
+   SIGNUP BUTTON
+============================== */
+
+.signup-btn {
+  width: 100%;
+
+  margin-top: 5px;
+
+  padding: 11px;
+
+  border: none;
+  border-radius: 8px;
+
+  background: linear-gradient(
+    135deg,
+    #f97316,
+    #ea580c
+  );
+
+  color: #ffffff;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.signup-btn:hover {
+  background: linear-gradient(
+    135deg,
+    #ea580c,
+    #c2410c
+  );
+
+  transform: translateY(-1px);
+
+  box-shadow: 0 6px 15px rgba(234, 88, 12, 0.2);
+}
+
+.signup-btn:active {
+  transform: translateY(0);
+}
+
+
+/* ==============================
+   LOGIN LINK
+============================== */
+
+.login-text {
+  margin: 16px 0 0;
+
+  text-align: center;
+
+  font-size: 13px;
+
+  color: #78716c;
+}
+
+.login-text a {
+  color: #ea580c;
+
+  font-weight: 700;
+
+  text-decoration: none;
+}
+
+.login-text a:hover {
+  color: #c2410c;
+  text-decoration: underline;
+}
+
+
+/* ==============================
+   LAPTOP / SMALL HEIGHT SCREENS
+============================== */
+
+@media (max-height: 750px) and (min-width: 769px) {
+
+  .signup-page {
+    padding: 15px 20px;
+  }
+
+  .signup-brand {
+    margin-bottom: 12px;
+  }
+
+  .signup-brand h1 {
+    font-size: 40px;
+  }
+
+  .signup-container {
+    padding: 22px 32px;
+  }
+
+  .signup-header {
+    margin-bottom: 15px;
+  }
+
+  .signup-header h2 {
+    font-size: 21px;
+  }
+
+  .signup-form {
+    gap: 9px;
+  }
+
+  .form-group {
+    gap: 4px;
+  }
+
+  .form-group input {
+    padding: 9px 11px;
+  }
+
+  .signup-btn {
+    padding: 10px;
+  }
+
+  .login-text {
+    margin-top: 12px;
+  }
+}
+
+
+/* ==============================
+   TABLET
+============================== */
+
+@media (max-width: 768px) {
+
+  .signup-page {
+    padding: 30px 18px;
+  }
+
+  .signup-brand {
+    margin-bottom: 20px;
+  }
+
+  .signup-brand h1 {
+    font-size: 44px;
+  }
+
+  .signup-container {
+    max-width: 430px;
+    padding: 28px 30px;
+  }
+}
+
+
+/* ==============================
+   MOBILE
+============================== */
+
+@media (max-width: 480px) {
+
+  .signup-page {
+    min-height: 100vh;
+    padding: 25px 15px;
+  }
+
+  .signup-brand {
+    margin-bottom: 18px;
+  }
+
+  .signup-brand h1 {
+    font-size: 38px;
+  }
+
+  .signup-brand p {
+    font-size: 12px;
+  }
+
+  .signup-container {
+    max-width: 100%;
+    padding: 25px 20px;
+    border-radius: 15px;
+  }
+
+  .signup-header {
+    margin-bottom: 18px;
+  }
+
+  .signup-header h2 {
+    font-size: 21px;
+  }
+
+  .signup-header p {
+    font-size: 12px;
+  }
+
+  .signup-form {
+    gap: 12px;
+  }
+
+  .form-group input {
+    padding: 11px 12px;
+    font-size: 14px;
+  }
+
+  .signup-btn {
+    padding: 11px;
+    font-size: 14px;
+  }
+
+  .login-text {
+    margin-top: 15px;
+    font-size: 12px;
+  }
+}
+
+
+/* ==============================
+   VERY SMALL PHONES
+============================== */
+
+@media (max-width: 350px) {
+
+  .signup-page {
+    padding: 20px 12px;
+  }
+
+  .signup-brand h1 {
+    font-size: 34px;
+  }
+
+  .signup-container {
+    padding: 22px 17px;
+  }
+
+  .signup-header h2 {
+    font-size: 19px;
+  }
+
+  .signup-form {
+    gap: 10px;
+  }
+}

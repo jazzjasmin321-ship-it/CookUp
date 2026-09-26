@@ -1,0 +1,88 @@
+/* =========================
+   RECIPE CARD LINK
+========================= */
+
+.recipe-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+
+/* =========================
+   RECIPE CARD
+========================= */
+
+.recipe-card {
+  background-color: #fff;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid #eee;
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.recipe-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+
+/* =========================
+   RECIPE IMAGE
+========================= */
+
+.recipe-image {
+  height: 220px;
+  background-color: #f8f5f0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 90px;
+}
+
+
+/* =========================
+   RECIPE INFORMATION
+========================= */
+
+.recipe-info {
+  padding: 20px;
+}
+
+.recipe-info h3 {
+  margin: 0 0 12px;
+  font-size: 22px;
+  color: #222;
+}
+
+.recipe-time {
+  margin: 0 0 8px;
+  font-size: 15px;
+  color: #666;
+}
+
+.recipe-difficulty {
+  margin: 0;
+  font-size: 14px;
+  color: #e76f51;
+  font-weight: 600;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 600px) {
+
+  .recipe-image {
+    height: 200px;
+  }
+
+  .recipe-info h3 {
+    font-size: 20px;
+  }
+}

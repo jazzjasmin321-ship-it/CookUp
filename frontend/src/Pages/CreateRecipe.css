@@ -1,0 +1,515 @@
+
+/* ==================================================
+   COOKUP - CREATE RECIPE
+   SELF CONTAINED STYLES
+================================================== */
+
+.recipe-page {
+  min-height: 100vh !important;
+  width: 100% !important;
+
+  background: #fff8f3 !important;
+
+  padding: 45px 20px 120px !important;
+
+  box-sizing: border-box !important;
+
+  display: block !important;
+}
+
+
+/* ==================================================
+   CARD
+================================================== */
+
+.recipe-card {
+  width: 900px !important;
+  max-width: calc(100% - 20px) !important;
+
+  margin: 0 auto !important;
+
+  padding: 50px !important;
+
+  box-sizing: border-box !important;
+
+  background: #ffffff !important;
+
+  border: 1px solid #f1dfd2 !important;
+
+  border-radius: 20px !important;
+
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.06) !important;
+}
+
+
+/* ==================================================
+   HEADER
+================================================== */
+
+.recipe-card .recipe-header {
+  width: 100% !important;
+
+  margin: 0 0 40px 0 !important;
+
+  padding: 0 !important;
+
+  text-align: center !important;
+
+  box-sizing: border-box !important;
+}
+
+.recipe-card .recipe-header h1 {
+  margin: 0 !important;
+
+  padding: 0 !important;
+
+  color: #222222 !important;
+
+  font-size: 34px !important;
+
+  font-weight: 700 !important;
+
+  line-height: 1.2 !important;
+}
+
+.recipe-card .recipe-header p {
+  margin: 10px 0 0 0 !important;
+
+  padding: 0 !important;
+
+  color: #888888 !important;
+
+  font-size: 14px !important;
+
+  line-height: 1.5 !important;
+}
+
+.recipe-card .recipe-header::after {
+  content: "" !important;
+
+  display: block !important;
+
+  width: 50px !important;
+
+  height: 4px !important;
+
+  margin: 16px auto 0 !important;
+
+  background: #f97316 !important;
+
+  border-radius: 10px !important;
+}
+
+
+/* ==================================================
+   FORM
+================================================== */
+
+.recipe-card form {
+  width: 100% !important;
+
+  margin: 0 !important;
+
+  padding: 0 !important;
+}
+
+
+/* ==================================================
+   SECTIONS
+================================================== */
+
+.recipe-card .recipe-section {
+  width: 100% !important;
+
+  margin: 0 0 28px 0 !important;
+
+  padding: 0 !important;
+
+  box-sizing: border-box !important;
+}
+
+.recipe-card .recipe-section > label {
+  display: block !important;
+
+  margin: 0 0 9px 0 !important;
+
+  padding: 0 !important;
+
+  color: #333333 !important;
+
+  font-size: 14px !important;
+
+  font-weight: 600 !important;
+
+  line-height: 1.4 !important;
+}
+
+
+/* ==================================================
+   INPUTS
+================================================== */
+
+.recipe-card .recipe-section input,
+.recipe-card .recipe-section textarea,
+.recipe-card .recipe-section select {
+  width: 100% !important;
+
+  margin: 0 !important;
+
+  box-sizing: border-box !important;
+
+  background: #ffffff !important;
+
+  border: 1px solid #dddddd !important;
+
+  border-radius: 9px !important;
+
+  color: #333333 !important;
+
+  font-family: inherit !important;
+
+  font-size: 14px !important;
+
+  outline: none !important;
+}
+
+
+/* Text input */
+
+.recipe-card .recipe-section input {
+  height: 50px !important;
+
+  padding: 0 15px !important;
+}
+
+
+/* Textarea */
+
+.recipe-card .recipe-section textarea {
+  height: 190px !important;
+
+  min-height: 190px !important;
+
+  padding: 14px 15px !important;
+
+  resize: vertical !important;
+
+  line-height: 1.6 !important;
+}
+
+
+/* Select */
+
+.recipe-card .recipe-section select {
+  height: 50px !important;
+
+  padding: 0 15px !important;
+
+  cursor: pointer !important;
+}
+
+
+/* Focus */
+
+.recipe-card .recipe-section input:focus,
+.recipe-card .recipe-section textarea:focus,
+.recipe-card .recipe-section select:focus {
+  border-color: #f97316 !important;
+
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.10) !important;
+}
+
+
+/* ==================================================
+   TWO COLUMN AREAS
+================================================== */
+
+.recipe-card .recipe-grid {
+  width: 100% !important;
+
+  display: grid !important;
+
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+
+  gap: 25px !important;
+
+  margin: 0 !important;
+
+  padding: 0 !important;
+
+  box-sizing: border-box !important;
+}
+
+.recipe-card .recipe-grid .recipe-section {
+  width: 100% !important;
+
+  min-width: 0 !important;
+}
+
+
+/* ==================================================
+   IMAGE UPLOAD
+================================================== */
+
+.recipe-card .image-upload {
+  width: 100% !important;
+
+  margin: 0 !important;
+
+  padding: 0 !important;
+}
+
+.recipe-card .image-upload input {
+  display: none !important;
+}
+
+.recipe-card .image-upload-label {
+  width: 100% !important;
+
+  height: 180px !important;
+
+  margin: 0 !important;
+
+  padding: 20px !important;
+
+  box-sizing: border-box !important;
+
+  display: flex !important;
+
+  flex-direction: column !important;
+
+  align-items: center !important;
+
+  justify-content: center !important;
+
+  gap: 9px !important;
+
+  background: #fff9f5 !important;
+
+  border: 2px dashed #f3b184 !important;
+
+  border-radius: 12px !important;
+
+  cursor: pointer !important;
+
+  text-align: center !important;
+}
+
+.recipe-card .image-upload-label:hover {
+  background: #fff2e9 !important;
+
+  border-color: #f97316 !important;
+}
+
+
+/* Upload circle */
+
+.recipe-card .upload-icon {
+  width: 52px !important;
+  height: 52px !important;
+
+  display: flex !important;
+
+  align-items: center !important;
+
+  justify-content: center !important;
+
+  border-radius: 50% !important;
+
+  background: #ffe5d2 !important;
+
+  color: #f97316 !important;
+
+  font-size: 30px !important;
+}
+
+.recipe-card .image-upload-label strong {
+  color: #444444 !important;
+
+  font-size: 15px !important;
+}
+
+.recipe-card .image-upload-label span {
+  color: #999999 !important;
+
+  font-size: 11px !important;
+}
+
+
+/* ==================================================
+   IMAGE PREVIEW
+================================================== */
+
+.recipe-card .image-preview {
+  width: 100% !important;
+
+  height: 280px !important;
+
+  margin: 15px 0 0 0 !important;
+
+  padding: 0 !important;
+
+  overflow: hidden !important;
+
+  border: 1px solid #eeeeee !important;
+
+  border-radius: 12px !important;
+}
+
+.recipe-card .image-preview img {
+  width: 100% !important;
+  height: 100% !important;
+
+  display: block !important;
+
+  margin: 0 !important;
+
+  object-fit: cover !important;
+}
+
+
+/* ==================================================
+   BUTTONS
+================================================== */
+
+.recipe-card .recipe-buttons {
+  width: 100% !important;
+
+  display: flex !important;
+
+  justify-content: center !important;
+
+  align-items: center !important;
+
+  gap: 15px !important;
+
+  margin: 12px 0 0 0 !important;
+
+  padding: 30px 0 0 0 !important;
+
+  border-top: 1px solid #eee5de !important;
+
+  box-sizing: border-box !important;
+}
+
+.recipe-card .cancel-btn,
+.recipe-card .save-btn {
+  height: 48px !important;
+
+  min-width: 155px !important;
+
+  padding: 0 25px !important;
+
+  border-radius: 9px !important;
+
+  font-family: inherit !important;
+
+  font-size: 14px !important;
+
+  font-weight: 600 !important;
+
+  cursor: pointer !important;
+
+  box-sizing: border-box !important;
+}
+
+
+/* Cancel */
+
+.recipe-card .cancel-btn {
+  background: #ffffff !important;
+
+  border: 1px solid #dddddd !important;
+
+  color: #555555 !important;
+}
+
+
+/* Create */
+
+.recipe-card .save-btn {
+  background: #f97316 !important;
+
+  border: 1px solid #f97316 !important;
+
+  color: #ffffff !important;
+}
+
+.recipe-card .save-btn:hover {
+  background: #ea580c !important;
+
+  border-color: #ea580c !important;
+}
+
+
+/* ==================================================
+   MOBILE
+================================================== */
+
+@media (max-width: 700px) {
+
+  .recipe-page {
+    padding: 30px 12px 110px !important;
+  }
+
+  .recipe-card {
+    width: 100% !important;
+
+    max-width: 100% !important;
+
+    padding: 35px 22px !important;
+  }
+
+  .recipe-card .recipe-grid {
+    grid-template-columns: 1fr !important;
+
+    gap: 0 !important;
+  }
+
+  .recipe-card .recipe-header h1 {
+    font-size: 29px !important;
+  }
+}
+
+
+@media (max-width: 500px) {
+
+  .recipe-page {
+    padding: 20px 10px 100px !important;
+  }
+
+  .recipe-card {
+    padding: 28px 17px !important;
+
+    border-radius: 15px !important;
+  }
+
+  .recipe-card .recipe-header {
+    margin-bottom: 30px !important;
+  }
+
+  .recipe-card .recipe-header h1 {
+    font-size: 26px !important;
+  }
+
+  .recipe-card .image-upload-label {
+    height: 160px !important;
+  }
+
+  .recipe-card .image-preview {
+    height: 220px !important;
+  }
+
+  .recipe-card .recipe-buttons {
+    flex-direction: column !important;
+
+    gap: 10px !important;
+  }
+
+  .recipe-card .cancel-btn,
+  .recipe-card .save-btn {
+    width: 100% !important;
+
+    min-width: 0 !important;
+  }
+}
