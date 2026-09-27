@@ -17,6 +17,7 @@ The application is built using **React.js** for the frontend and **Java Spring B
 * View recipe details
 * My Recipes section
 * Recipe view counter
+* Search recipes by recipe name or chef name
 * Most viewed recipes
 * Responsive user interface
 * Logout functionality
@@ -33,6 +34,12 @@ The application is built using **React.js** for the frontend and **Java Spring B
 * View recipe details
 * View most viewed recipes
 * Manage recipe-related information
+
+## Screenshots
+
+### Home Page
+
+![CookUp Home Page](screenshots/home.png)
 
 ## Technologies Used
 
@@ -93,10 +100,13 @@ CookUp/
 │   ├── public/
 │   ├── src/
 │   │   ├── components/
-│   │   ├── pages/
+│   │   ├── Pages/
 │   │   └── App.js
 │   │
 │   └── README.md
+│
+├── screenshots/
+│   └── home.png
 │
 └── README.md
 ```
@@ -225,6 +235,7 @@ The application was tested for:
 * Recipe update
 * Recipe deletion
 * Recipe view counting
+* Recipe search
 * User profile operations
 * Password change
 * User blocking and unblocking
@@ -238,7 +249,6 @@ Possible future improvements include:
 * JWT-based authentication
 * Password reset through email
 * Recipe image upload to cloud storage
-* Recipe search and filtering improvements
 * Recipe categories
 * User favourites
 * Recipe ratings and reviews
