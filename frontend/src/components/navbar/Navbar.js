@@ -1,94 +1,113 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./Navbar.css";
 
 function Navbar() {
-const location = useLocation();
-const navigate = useNavigate();
+  const location = useLocation();
+  const navigate = useNavigate();
 
-const handleLogout = () => {
-localStorage.removeItem("cookupUser");
-navigate("/login");
-};
+  const [searchText, setSearchText] = useState("");
 
-return (
-<>
-{/* TOP NAVBAR */}
+  const handleLogout = () => {
+    localStorage.removeItem("cookupUser");
+    navigate("/login");
+  };
 
-  <header className="top-navbar">
+  const handleSearch = (e) => {
+    e.preventDefault();
 
-    <div className="navbar-brand">
-      <h1>CookUp</h1>
-    </div>
+    const query = searchText.trim();
 
-    <div className="search-container">
+    if (!query) {
+      navigate("/");
+      return;
+    }
 
-      <span className="search-icon">⌕</span>
+    navigate(`/?search=${encodeURIComponent(query)}`);
+  };
 
-      <input
-        type="text"
-        placeholder="Search recipes..."
-      />
+  return (
+    <>
+      {/* TOP NAVBAR */}
 
-    </div>
+      <header className="top-navbar">
 
-  </header>
+        <div className="navbar-brand">
+          <h1>CookUp</h1>
+        </div>
 
+        <form
+          className="search-container"
+          onSubmit={handleSearch}
+        >
 
-  {/* BOTTOM NAVIGATION */}
+          <span className="search-icon">⌕</span>
 
-  <nav className="bottom-navbar">
+          <input
+            type="text"
+            placeholder="Search recipes..."
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
+          />
 
-    <Link
-      to="/"
-      className={`bottom-nav-item ${
-        location.pathname === "/" ? "active" : ""
-      }`}
-    >
-      <span className="nav-icon">⌂</span>
-      <span>Home</span>
-    </Link>
+        </form>
 
-
-    <Link
-      to="/create-recipe"
-      className={`bottom-nav-item ${
-        location.pathname === "/create-recipe"
-          ? "active"
-          : ""
-      }`}
-    >
-      <span className="nav-icon create-icon">+</span>
-      <span>Create</span>
-    </Link>
+      </header>
 
 
-    <Link
-      to="/profile"
-      className={`bottom-nav-item ${
-        location.pathname === "/profile"
-          ? "active"
-          : ""
-      }`}
-    >
-      <span className="nav-icon">◯</span>
-      <span>Profile</span>
-    </Link>
+      {/* BOTTOM NAVIGATION */}
+
+      <nav className="bottom-navbar">
+
+        <Link
+          to="/"
+          className={`bottom-nav-item ${
+            location.pathname === "/" ? "active" : ""
+          }`}
+        >
+          <span className="nav-icon">⌂</span>
+          <span>Home</span>
+        </Link>
 
 
-    <button
-      type="button"
-      className="bottom-nav-item logout-button"
-      onClick={handleLogout}
-    >
-      <span className="nav-icon">↪</span>
-      <span>Logout</span>
-    </button>
+        <Link
+          to="/create-recipe"
+          className={`bottom-nav-item ${
+            location.pathname === "/create-recipe"
+              ? "active"
+              : ""
+          }`}
+        >
+          <span className="nav-icon create-icon">+</span>
+          <span>Create</span>
+        </Link>
 
-  </nav>
-</>
 
-);
+        <Link
+          to="/profile"
+          className={`bottom-nav-item ${
+            location.pathname === "/profile"
+              ? "active"
+              : ""
+          }`}
+        >
+          <span className="nav-icon">◯</span>
+          <span>Profile</span>
+        </Link>
+
+
+        <button
+          type="button"
+          className="bottom-nav-item logout-button"
+          onClick={handleLogout}
+        >
+          <span className="nav-icon">↪</span>
+          <span>Logout</span>
+        </button>
+
+      </nav>
+    </>
+  );
 }
 
 export default Navbar;

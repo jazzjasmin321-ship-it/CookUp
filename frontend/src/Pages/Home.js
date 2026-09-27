@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import "./Home.css";
 
 function Home() {
@@ -7,12 +7,16 @@ function Home() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+  const [searchParams] = useSearchParams();
+  const searchQuery = searchParams.get("search") || "";
+
   useEffect(() => {
     fetch("http://localhost:8080/api/recipes")
       .then((response) => {
         if (!response.ok) {
           throw new Error("Failed to fetch recipes");
         }
+
         return response.json();
       })
       .then((data) => {
@@ -26,24 +30,24 @@ function Home() {
       });
   }, []);
 
+  const filteredRecipes = recipes.filter((recipe) => {
+    if (!searchQuery.trim()) {
+      return true;
+    }
+
+    const query = searchQuery.toLowerCase();
+
+    const recipeName = recipe.name?.toLowerCase() || "";
+    const chefName = recipe.chef?.fullname?.toLowerCase() || "";
+
+    return (
+      recipeName.includes(query) ||
+      chefName.includes(query)
+    );
+  });
+
   return (
     <main className="home-page">
-
-      {/* VEG / NON-VEG */}
-
-      <section className="category-section">
-
-        <button className="category-btn active">
-          <span className="category-dot veg-dot"></span>
-          Veg
-        </button>
-
-        <button className="category-btn">
-          <span className="category-dot nonveg-dot"></span>
-          Non-Veg
-        </button>
-
-      </section>
 
       {/* MOST POPULAR */}
 
@@ -57,11 +61,17 @@ function Home() {
             </p>
 
             <h2>
-              Most Popular Dishes
+              {searchQuery
+                ? `Search Results for "${searchQuery}"`
+                : "Most Popular Dishes"}
             </h2>
 
             <p className="section-description">
-              A sneak peek at what everyone is cooking.
+              {searchQuery
+                ? `${filteredRecipes.length} recipe${
+                    filteredRecipes.length !== 1 ? "s" : ""
+                  } found.`
+                : "A sneak peek at what everyone is cooking."}
             </p>
           </div>
 
@@ -79,12 +89,20 @@ function Home() {
           <p>{error}</p>
         )}
 
+        {/* NO SEARCH RESULTS */}
+
+        {!loading && !error && filteredRecipes.length === 0 && (
+          <div className="no-results">
+            <p>No recipes found.</p>
+          </div>
+        )}
+
         {/* RECIPE GRID */}
 
-        {!loading && !error && (
+        {!loading && !error && filteredRecipes.length > 0 && (
           <div className="recipe-grid">
 
-            {recipes.map((recipe) => (
+            {filteredRecipes.map((recipe) => (
 
               <div
                 className="recipe-card"
